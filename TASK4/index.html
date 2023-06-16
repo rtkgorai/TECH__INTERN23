@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Traffic Sign Detection</title>
+  </head>
+  <body>
+    <h1>Traffic Sign Detection</h1>
+    <form method="POST" enctype="multipart/form-data" action="/predict">
+      <input type="file" name="image" accept="image/*">
+      <input type="submit" value="Predict">
+    </form>
+    <div id="result"></div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $('form').submit(function(event) {
+        event.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+          url: '/predict',
+          type: 'POST',
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function(response) {
+            $('#result').text('Predicted Traffic Sign: ' + response.prediction);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
